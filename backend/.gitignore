@@ -33,3 +33,7 @@ coverage/
 # Miscellaneous
 *.bak
 *.tmp
+
+
+#google sheets file
+gen-lang-client-0474945211-3f551c54d05f.json
