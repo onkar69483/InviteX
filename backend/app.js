@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const employeeRoutes = require("./routes/employeeRoutes");
+const path = require('path');
 
 const app = express();
 
@@ -13,9 +14,12 @@ connectDB();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Default route
+// Serve static files for the landing page
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Landing page route
 app.get('/', (req, res) => {
-  res.send('InviteX Backend is running!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.use('/api/employee', employeeRoutes);
