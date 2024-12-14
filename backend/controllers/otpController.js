@@ -58,10 +58,10 @@ const verifyOtpHandler = async (req, res) => {
         return res.status(400).json({ message: 'Invalid or expired OTP' });
       }
   
-      // OTP is valid; proceed with login
-      employee.otp = null; // Clear OTP after successful verification
-      employee.otpExpiresAt = null;
-      await employee.save();
+      // // OTP is valid; proceed with login
+      // employee.otp = null; // Clear OTP after successful verification
+      // employee.otpExpiresAt = null;
+      // await employee.save();
   
       // Send employee information in the response
       res.status(200).json({
