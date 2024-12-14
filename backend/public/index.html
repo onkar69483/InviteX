@@ -279,6 +279,246 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .music-attribution {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            z-index: 1100;
+            max-width: 300px;
+        }
+
+        .music-attribution a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .music-attribution a:hover {
+            text-decoration: underline;
+        }
+
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1100;
+        }
+
+        .music-controls button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .music-controls button:hover {
+            color: var(--secondary-color);
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateX(30px) rotate(10deg);
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Previous existing styles remain the same */
+
+        /* New decorative elements */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .hero-section {
+            position: relative;
+        }
+
+        .hero-illustration {
+            position: relative;
+        }
+
+        .hero-illustration::before,
+        .hero-illustration::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .hero-illustration::before {
+            width: 100px;
+            height: 100px;
+            top: -50px;
+            right: -50px;
+            animation-delay: -2s;
+        }
+
+        .hero-illustration::after {
+            width: 150px;
+            height: 150px;
+            bottom: -75px;
+            left: -75px;
+            animation-delay: -1s;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg, 
+                transparent, 
+                rgba(255,255,255,0.05), 
+                transparent
+            );
+            transform: rotate(-45deg);
+            animation: drift 5s infinite linear;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .background-shapes {
+                display: none;
+            }
+        }
+        @keyframes float {
+            0% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            33% {
+                transform: translateX(50px) translateY(-30px) rotate(15deg);
+                opacity: 0.5;
+            }
+            66% {
+                transform: translateX(-40px) translateY(20px) rotate(-10deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+        }
+        
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+        
+        /* More variety in shape positioning and sizes */
+        .background-shapes .floating-shape:nth-child(1) {
+            top: 10%; 
+            left: 5%; 
+            width: 50px; 
+            height: 50px;
+            animation-duration: 6s;
+            animation-delay: -2s;
+        }
+        
+        .background-shapes .floating-shape:nth-child(2) {
+            top: 80%; 
+            right: 10%; 
+            width: 80px; 
+            height: 80px;
+            animation-duration: 5s;
+            animation-delay: 0s;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .background-shapes .floating-shape:nth-child(3) {
+            top: 50%; 
+            left: 90%; 
+            width: 40px; 
+            height: 40px;
+            animation-duration: 4s;
+            animation-delay: -1s;
+            background: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -339,11 +579,91 @@
         </div>
     </section>
 
+    <!-- Music Attribution -->
+    <div class="music-attribution">
+        <p>Music: "Inspire" by Wavecont<br/>
+        Provided by <a href="https://protunes.net" target="_blank">ProTunes.net</a><br/>
+        Video Link: <a href="https://bit.ly/3RFxMdU" target="_blank">Original Source</a></p>
+    </div>
+
+    <!-- Audio Element and Controls -->
+    <div class="music-controls">
+        <button id="playPauseBtn" aria-label="Play/Pause Music">
+            <i class="fas fa-pause"></i>
+        </button>
+        <button id="muteBtn" aria-label="Mute/Unmute Music">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="background-shapes">
+        <div class="floating-shape" style="top: 10%; left: 5%; width: 50px; height: 50px; animation: float 6s infinite -2s;"></div>
+        <div class="floating-shape" style="top: 80%; right: 10%; width: 80px; height: 80px; animation: float 5s infinite;"></div>
+        <div class="floating-shape" style="top: 50%; left: 90%; width: 40px; height: 40px; animation: float 4s infinite -1s;"></div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2024 InviteX. Revolutionizing Digital Event Invitations.</p>
             <p>Questions? <a href="/contact">Contact Our Support Team</a></p>
         </div>
     </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const playPauseIcon = playPauseBtn.querySelector('i');
+            const muteIcon = muteBtn.querySelector('i');
+
+            // Try to play music (respecting browser autoplay restrictions)
+            const playMusic = () => {
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Successful autoplay
+                        playPauseIcon.classList.replace('fa-play', 'fa-pause');
+                    }).catch(error => {
+                        // Autoplay was prevented
+                        console.log('Autoplay was prevented', error);
+                    });
+                }
+            };
+
+            // Initial attempt to play music
+            playMusic();
+
+            // Play/Pause Toggle
+            playPauseBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseIcon.classList.replace('fa-play', 'fa-pause');
+                } else {
+                    audio.pause();
+                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
+                }
+            });
+
+            // Mute/Unmute Toggle
+            muteBtn.addEventListener('click', () => {
+                audio.muted = !audio.muted;
+                if (audio.muted) {
+                    muteIcon.classList.replace('fa-volume-up', 'fa-volume-mute');
+                } else {
+                    muteIcon.classList.replace('fa-volume-mute', 'fa-volume-up');
+                }
+            });
+
+            // User interaction to enable autoplay
+            document.addEventListener('click', playMusic, { once: true });
+        });
+    </script>
 </body>
 </html>
