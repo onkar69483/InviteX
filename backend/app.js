@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const employeeRoutes = require("./routes/employeeRoutes");
+const otpRoutes = require("./routes/otpRoutes")
 const path = require('path');
 
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/employee', employeeRoutes);
+app.use('/api/otp', otpRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
