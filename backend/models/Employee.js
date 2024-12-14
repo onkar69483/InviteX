@@ -11,7 +11,6 @@ const employeeSchema = new mongoose.Schema({
       status: { type: String, enum: ["Pending", "Attended"], default: "Pending" },
     },
   ],
-  qrCode: { type: String },
   eventAttended: { type: Boolean },
 });
 
