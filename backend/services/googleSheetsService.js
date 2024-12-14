@@ -2,24 +2,9 @@ const { google } = require("googleapis");
 const QRCode = require("qrcode");
 const getGoogleSheetsAuth = require("../config/googleSheets");
 
-const fetchGoogleSheetData = async () => {
-  const auth = getGoogleSheetsAuth();
-  const sheets = google.sheets({ version: "v4", auth });
-
-  const spreadsheetId = process.env.SPREADSHEET_ID;
-  const range = "Sheet1!A2:M";
-
-  const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
-
-  const rows = response.data.values;
-
-  if (!rows || rows.length === 0) {
-    console.log("No data found.");
-    return [];
-  }
-
-  const employees = await Promise.all(
-    rows.map(async (row) => {
+const processBatch = async (batch) => {
+  return await Promise.all(
+    batch.map(async (row) => {
       const [
         timestamp,
         email,
@@ -66,6 +51,33 @@ const fetchGoogleSheetData = async () => {
       };
     })
   );
+};
+
+const fetchGoogleSheetData = async () => {
+  const auth = getGoogleSheetsAuth();
+  const sheets = google.sheets({ version: "v4", auth });
+
+  const spreadsheetId = process.env.SPREADSHEET_ID;
+  const range = "Sheet1!A2:M";
+
+  const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
+
+  const rows = response.data.values;
+
+  if (!rows || rows.length === 0) {
+    console.log("No data found.");
+    return [];
+  }
+
+  const batchSize = 5; // Number of rows to process in each batch
+  const employees = [];
+
+  for (let i = 0; i < rows.length; i += batchSize) {
+    const batch = rows.slice(i, i + batchSize);
+    const processedBatch = await processBatch(batch);
+    employees.push(...processedBatch);
+    console.log(`Batch ${Math.floor(i / batchSize) + 1} processed.`);
+  }
 
   return employees;
 };
