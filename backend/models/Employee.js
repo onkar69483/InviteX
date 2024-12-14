@@ -13,6 +13,8 @@ const employeeSchema = new mongoose.Schema({
     },
   ],
   eventAttended: { type: Boolean },
+  otp: { type: String },
+  otpExpiresAt: { type: Date },
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);
