@@ -1,4 +1,4 @@
-const { verifyToken } = require("../utils/jwtUtils");
+const { verifyToken } = require("../services/jwtUtils");
 const Admin = require("../models/Admin");
 
 const adminAuth = async (req, res, next) => {

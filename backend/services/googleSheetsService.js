@@ -57,4 +57,36 @@ const fetchGoogleSheetData = async () => {
   return employees;
 };
 
-module.exports = { fetchGoogleSheetData };
+// New function to append data to a new Google Sheet (for selected employees)
+const appendToNewGoogleSheet = async (rows) => {
+  const auth = getGoogleSheetsAuth();
+  const sheets = google.sheets({ version: "v4", auth });
+
+  const NEW_SPREADSHEET_ID = process.env.NEW_SPREADSHEET_ID;  // Add new spreadsheet ID in your .env
+  const range = "Sheet1!A1";  // Specify the range where you want to append data
+
+  // Prepare the header row if needed (only once, first time it’s added)
+  const headerRow = [
+    "Employee ID", "Employee Name", "Employee Email", "Family Member Name", "Relation", "Status"
+  ];
+
+  const resource = {
+    values: [headerRow, ...rows],  // Add new rows to the header row
+  };
+
+  try {
+    // Appending data to the new Google Sheet
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: NEW_SPREADSHEET_ID,
+      range: range,
+      valueInputOption: "RAW",
+      resource: resource,
+    });
+    console.log("Rows added to the new Google Sheet successfully.");
+  } catch (error) {
+    console.error("Error appending data to new Google Sheet:", error.message);
+    throw error;
+  }
+};
+
+module.exports = { fetchGoogleSheetData, appendToNewGoogleSheet };
