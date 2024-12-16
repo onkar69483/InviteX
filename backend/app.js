@@ -4,11 +4,13 @@ const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const employeeRoutes = require("./routes/employeeRoutes");
-const otpRoutes = require("./routes/otpRoutes")
+const otpRoutes = require("./routes/otpRoutes");
+const adminRoutes = require("./routes/authRoutes"); // Import admin routes
 const path = require('path');
 
 const app = express();
 
+// Connect to the database
 connectDB();
 
 // Middleware
@@ -23,9 +25,18 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// API Routes
 app.use('/api/employee', employeeRoutes);
 app.use('/api/otp', otpRoutes);
+app.use('/api/admin', adminRoutes); // Add the admin routes
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong!" });
+});
+
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
