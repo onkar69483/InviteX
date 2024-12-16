@@ -34,25 +34,28 @@ const permitEmployee = async (req, res) => {
     // Save the updated employee data
     await employee.save();
 
-    // Prepare rows for Google Sheets
-    const rowsToAdd = [];
-    familyMembers.forEach((member) => {
-      rowsToAdd.push([
-        employee.employeeId,
-        employee.name,
-        employee.email,
-        member.name,
-        member.relation,
-        "Attended",
-      ]);
-    });
+    // Only append data to Google Sheets if event was not attended before
+    if (eventAttended) {
+      // Prepare rows for Google Sheets
+      const rowsToAdd = [];
+      familyMembers.forEach((member) => {
+        rowsToAdd.push([
+          employee.employeeId,
+          employee.name,
+          employee.email,
+          member.name,
+          member.relation,
+          "Attended",
+        ]);
+      });
 
-    // Append data to the new Google Sheet
-    await appendToNewGoogleSheet(rowsToAdd);
+      // Append data to the new Google Sheet
+      await appendToNewGoogleSheet(rowsToAdd);
+    }
 
     res.status(200).json({ message: "Employee data updated successfully" });
   } catch (error) {
-    console.error("Error in employeeData:", error);
+    console.error("Error in permitEmployee:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
