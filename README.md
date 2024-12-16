@@ -9,4 +9,5 @@ InviteX is a web-based application designed to streamline event invitation and e
   - Employee verification by admin
 
 - [ ] post-event phase
+  - Employee feedback
   - Data analysis
