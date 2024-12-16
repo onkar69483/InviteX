@@ -5,7 +5,8 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const employeeRoutes = require("./routes/employeeRoutes");
 const otpRoutes = require("./routes/otpRoutes");
-const adminRoutes = require("./routes/authRoutes"); // Import admin routes
+const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const path = require('path');
 
 const app = express();
@@ -28,7 +29,8 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/employee', employeeRoutes);
 app.use('/api/otp', otpRoutes);
-app.use('/api/admin', adminRoutes); // Add the admin routes
+app.use('/api/auth', authRoutes); // admin authentication routes
+app.use('/api/admin', adminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
